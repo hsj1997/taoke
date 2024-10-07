@@ -1,11 +1,18 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 
 const routes = [
   {
     name: 'notFound',
     path: '/:path(.*)+',
     redirect: {
-      name: 'goods'
+      name: 'ddk'
+    }
+  },
+  {
+    name: '',
+    path: '/',
+    redirect: {
+      name: 'ddk'
     }
   },
   {
@@ -31,12 +38,28 @@ const routes = [
     meta: {
       title: '商品详情'
     }
+  },
+  {
+    name: 'ddk',
+    path: '/ddk',
+    component: () => import('@/view/ddk/index.vue'),
+    meta: {
+      title: 'ddk商品转链'
+    }
+  },
+  {
+    name: 'home',
+    path: '/home',
+    component: () => import('@/view/home/index.vue'),
+    meta: {
+      title: '首页'
+    }
   }
 ]
 
 const router = createRouter({
   routes,
-  history: createWebHashHistory()
+  history: createWebHistory()//createWebHashHistory()
 })
 
 router.beforeEach((to, from, next) => {
