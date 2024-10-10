@@ -40,6 +40,14 @@ const routes = [
     }
   },
   {
+    name: 'search',
+    path: '/search',
+    component: () => import('@/view/search/index.vue'),
+    meta: {
+      title: '搜索商品'
+    }
+  },
+  {
     name: 'ddk',
     path: '/ddk',
     component: () => import('@/view/ddk/index.vue'),

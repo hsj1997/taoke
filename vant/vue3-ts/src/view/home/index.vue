@@ -1,6 +1,17 @@
 <template>
 
   <div>
+    <van-search
+            v-model=""
+            show-action
+            label="商品"
+            placeholder="请输入搜索商品关键词"
+            @search="onSearch"
+    >
+      <template #action>
+        <div @click="onSearch">搜索</div>
+      </template>
+    </van-search>
     <img style="width: 100%;object-fit: cover;overflow: hidden;height: 600px;" src="../../assets/建设.png" />
 
 
