@@ -26,27 +26,67 @@
                 <van-cell v-for="item in goodsList" :key="item" >
 
                     <div class="product-item">
-                        <!--<van-image   width="10rem"
-                                     height="10rem"
-                                     fit="contain"
-                                     :src="" :alt="item.goodsName">-->
+                        <div class="item-container">
+                            <div style="display: flex;flex-grow: 1;">
+                                <van-image
+                                        width="34rem"
+                                        height="10rem"
+                                        fit="cover"
+                                        :src="item.goodsThumbnailUrl || item.goodsImageUrl"
+                                        class="item-image"
+                                />
+                                <div class="item-details">
+                                    <p class="item-name">{{ item.goodsName }}</p>
+                                    <div style="display: flex;justify-content:start">
+                                    <span style="margin-right: 10px">品牌</span>
+                                        <van-tag
+                                                size=""
+                                                color="#7232dd"
+                                                style="margin-right: 5px"
+                                        >
+                                            {{ item.brandName }}
+                                        </van-tag>
+                                    </div>
 
-                        <van-image
-                                width="10rem"
-                                height="10rem"
-                                fit="contain"
-                                :src="item.goodsThumbnailUrl || item.goodsImageUrl" />
-                        <h2>{{item.goodsName}}</h2>
-                        <h4>{{item.goodsDesc}}</h4>
-                        <p>品牌: {{item.brandName}}</p>
-                        <p>当前团购价: <span style="color: red;">¥{{item.minGroupPrice}}</span> <s>原价: ¥{{item.minNormalPrice}}</s></p>
-                        <p>优惠券: ¥{{item.couponDiscount}} 额外优惠券: ¥{{item.extraCouponAmount}}</p>
+                                </div>
+                            </div>
 
-                        <van-tag v-for="unifiedTagsItem in item.unifiedTags"
-                                 :key="item"
-                                 color="#7232dd"
-                                    style="margin-right: 5px">{{unifiedTagsItem}}</van-tag>
-                        <p>销售量: {{item.salesTip}}</p>
+                            <!--fit="contain"-->
+                            <div class="item-details">
+                                <div style="display:flex;justify-content:start" class="tags">
+                                    <van-tag
+                                            v-for="unifiedTagsItem in item.unifiedTags"
+                                            :key="unifiedTagsItem"
+                                            color="#7232dd"
+                                            class="tag"
+                                            style="margin-right: 5px"
+                                    >
+                                        {{ unifiedTagsItem }}
+                                    </van-tag>
+                                </div>
+                                <div style="display: flex;justify-content:space-between">
+                                <p class="item-price">
+                                    当前团购价: <span class="current-price">¥{{ convertToYuan(item.minGroupPrice) }}</span>
+                                    <s class="original-price">原价: ¥{{ convertToYuan(item.minNormalPrice) }}</s>
+                                </p>
+                                </div>
+                                <div style="display: flex;justify-content:space-between">
+                                <p class="item-coupons">
+                                    优惠券: <span class="current-price">¥{{ convertToYuan(item.couponDiscount) }}</span> |
+                                    额外优惠券: <span class="current-price">¥{{ convertToYuan(item.extraCouponAmount) }}</span>
+                                </p>
+                                </div>
+                                <div style="display: flex;justify-content:space-between">
+                                    <p class="final-price">
+                                        卷后价: <span class="final-price-value">¥{{ convertToYuan(item.minGroupPrice - item.couponDiscount) }}</span>
+                                    </p>
+                                    <p class="item-sales"> 销售量: {{ item.salesTip }}</p>
+
+                                </div>
+
+                            </div>
+                        </div>
+
                     </div>
 
                 </van-cell>
@@ -57,16 +97,21 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref,getCurrentInstance } from 'vue';
   import { getGoodsSearchApi } from '@/view/search/index.js';
   import { showNotify } from 'vant';
   import { Product } from '@/types';
+
+  const { proxy } = getCurrentInstance();
+  const convertToYuan = (item:number) => {
+    return proxy.$publicFunc.convertToYuan(item);
+  };
 
   const searchValue = ref<string>('');
   const listId = ref<string>('');
   const goodsList = ref<Product[]>([]);
   const totalCount = ref(100);
-  const pageSize = ref(10);
+  const pageSize = ref(20);
   const pageNum = ref(1);
 
   const loading = ref<boolean>(false);
@@ -115,9 +160,66 @@
 </script>
 
 <style  lang="scss" scoped>
+
     .custom {
         width: 100px;
         font-size: 14px;
 
+    }
+    .product-item{
+        border: 0px solid red;
+    }
+
+    .item-container {
+        /*display: flex;*/
+        padding: 1rem;
+        border: 1px solid #eaeaea;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin: 0rem 0;
+        background-color: #fff;
+    }
+    .item-image {
+        border-radius: 8px;
+        margin-right: 1rem;
+    }
+    .item-details {
+        flex-grow: 1; /* Fill the remaining space */
+    }
+    .item-name {
+        text-align: left;
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin: 0;
+        color: #333;
+    }
+    .item-price,
+    .item-coupons,
+    .final-price,
+    .item-sales {
+        margin: 0rem 0;
+        font-size: 1rem;
+        color: #666;
+    }
+    .current-price {
+        color: red;
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+    .original-price {
+        color: #999;
+        text-decoration: line-through;
+        margin-left: 0.5rem;
+    }
+    .final-price-value {
+        color: red;
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+    .tags {
+        margin-top: 0.5rem;
+    }
+    .tag {
+        margin-right: 5px;
     }
 </style>

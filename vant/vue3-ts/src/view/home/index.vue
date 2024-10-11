@@ -2,7 +2,7 @@
 
   <div>
     <van-search
-            v-model=""
+            v-model="url"
             show-action
             label="商品"
             placeholder="请输入搜索商品关键词"
