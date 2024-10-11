@@ -48,6 +48,14 @@ const routes = [
     }
   },
   {
+    name: 'goodsDetails',
+    path: '/goodsDetails',
+    component: () => import('@/view/goodsDetails/index.vue'),
+    meta: {
+      title: '商品详情'
+    }
+  },
+  {
     name: 'ddk',
     path: '/ddk',
     component: () => import('@/view/ddk/index.vue'),

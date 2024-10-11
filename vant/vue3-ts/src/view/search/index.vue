@@ -23,7 +23,7 @@
                     finished-text="全部加载完成"
                     @load="onLoad"
             >
-                <van-cell v-for="item in goodsList" :key="item" >
+                <van-cell v-for="item in goodsList" :key="item" @click="toDetail(item.goodsSign)" >
 
                     <div class="product-item">
                         <div class="item-container">
@@ -97,6 +97,7 @@
 </template>
 
 <script lang="ts" setup>
+  import router from '@/router';
   import { ref,getCurrentInstance } from 'vue';
   import { getGoodsSearchApi } from '@/view/search/index.js';
   import { showNotify } from 'vant';
@@ -109,6 +110,7 @@
 
   const searchValue = ref<string>('');
   const listId = ref<string>('');
+  const searchId = ref<string>('');
   const goodsList = ref<Product[]>([]);
   const totalCount = ref(100);
   const pageSize = ref(20);
@@ -146,6 +148,7 @@
       goodsList.value = goodsList.value.concat(res.data.goodsList);
       totalCount.value = res.data.totalCount;
       listId.value = res.data.listId;
+      searchId.value = res.data.searchId;
 
       //加载结束
       loading.value = false;
@@ -156,7 +159,11 @@
 
     })
   }
-
+  //详情
+  const toDetail = (item:string) => {
+    //获取当前详情
+    router.push({name:'goodsDetails',query:{searchId:searchId.value,goodsSign:item}});
+  }
 </script>
 
 <style  lang="scss" scoped>

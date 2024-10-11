@@ -4,7 +4,7 @@ import 'vant/es/toast/style'
 import 'vant/es/notify/style'
 import router from './router'
 
-import publicFunc from "./utils/public.ts";
+import publicFunc from "@/utils/public";
 
 const app = createApp(App)
 app.use(router)
