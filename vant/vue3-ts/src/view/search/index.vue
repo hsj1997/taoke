@@ -80,8 +80,12 @@
                                     <p class="final-price">
                                         卷后价: <span class="final-price-value">¥{{ convertToYuan(item.minGroupPrice - item.couponDiscount) }}</span>
                                     </p>
+
                                     <p class="item-sales"> 销售量: {{ item.salesTip }}</p>
 
+                                </div>
+                                <div style="position: absolute;display: flex;justify-content:center;right:1%;bottom: 20%">
+                                    <van-button round icon="link-o" color=""  type="success" @click.stop="oneClickPurchase(item.goodsSign)">直</van-button>
                                 </div>
 
                             </div>
@@ -95,13 +99,18 @@
         </div>
     </div>
 </template>
-
-<script lang="ts" setup>
+<script lang="ts">
+  export default {
+    name: 'search2',  // 定义组件的名称
+  };
+  </script>
+  <script lang="ts"  setup>
   import router from '@/router';
   import { ref,getCurrentInstance } from 'vue';
   import { getGoodsSearchApi } from '@/view/search/index.js';
   import { showNotify } from 'vant';
   import { Product } from '@/types';
+  import { getGoodsPromotionUrlGenerateApi } from '@/view/goodsDetails';
 
   const { proxy } = getCurrentInstance();
   const convertToYuan = (item:number) => {
@@ -163,6 +172,19 @@
   const toDetail = (item:string) => {
     //获取当前详情
     router.push({name:'goodsDetails',query:{searchId:searchId.value,goodsSign:item}});
+  }
+    //直达
+  const oneClickPurchase = (goodSgin:string= '') => {
+    const param = {
+      goodsSignList:goodSgin,
+      searchId:searchId.value
+    }
+    getGoodsPromotionUrlGenerateApi(param).then((res: any) => {
+      console.log(res)
+      // 跳转到下单页
+      //window.location.href = res.data;
+      window.open(res.data, '_blank');
+    })
   }
 </script>
 

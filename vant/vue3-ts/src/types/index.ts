@@ -71,3 +71,73 @@ export interface Product {
   unifiedTags: string[]; // 统一标签
   zsDuoId: number; // 资源双ID
 }
+/**
+ 商品详情
+ */
+export interface ProductDetails {
+  activityPromotionRate: number | null;
+  activityTags: number[];
+  brandName: string;
+  cashGiftAmount: number | null;
+  catId: number;
+  catIds: number[];
+  cltCpnBatchSn: string;
+  cltCpnDiscount: number | null;
+  cltCpnEndTime: number | null;
+  cltCpnMinAmt: number | null;
+  cltCpnQuantity: number | null;
+  cltCpnRemainQuantity: number | null;
+  cltCpnStartTime: number | null;
+  couponDiscount: number;
+  couponEndTime: number;
+  couponMinOrderAmount: number;
+  couponRemainQuantity: number;
+  couponStartTime: number;
+  couponTotalQuantity: number;
+  createAt: string | null;
+  descTxt: string;
+  extraCouponAmount: number;
+  goodsDesc: string;
+  goodsGalleryUrls: string[];
+  goodsImageUrl: string;
+  goodsName: string;
+  goodsSign: string;
+  goodsThumbnailUrl: string;
+  hasCoupon: boolean;
+  hasMallCoupon: boolean;
+  isMultiGroup: boolean;
+  lgstTxt: string;
+  mallCouponDiscountPct: number;
+  mallCouponEndTime: number;
+  mallCouponMaxDiscountAmount: number;
+  mallCouponMinOrderAmount: number;
+  mallCouponRemainQuantity: number;
+  mallCouponStartTime: number;
+  mallCouponTotalQuantity: number;
+  mallCps: number;
+  mallId: number;
+  mallImgUrl: string;
+  mallName: string;
+  materialList: any[];  // Assuming no specific structure provided
+  merchantType: number;
+  minGroupPrice: number;
+  minNormalPrice: number;
+  onlySceneAuth: boolean;
+  optId: number;
+  optIds: number[];
+  optName: string;
+  planType: number;
+  predictPromotionRate: number;
+  promotionRate: number;
+  salesTip: string;
+  servTxt: string;
+  serviceTags: number[];
+  shareRate: number;
+  skuList: any[];  // Assuming no specific structure provided
+  subsidyAmount: number | null;
+  subsidyDuoAmountTenMillion: number | null;
+  subsidyGoodsType: number;
+  unifiedTags: string[];
+  videoUrls: string[];
+  zsDuoId: number;
+}

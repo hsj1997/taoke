@@ -10,9 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vant/touch-emulator": "^1.4.0",
     "axios": "^1.7.7",
     "vant": "^4.0.0",
-    "vue": "^3.2.37"
+    "vue": "^3.4.25"
   },
   "devDependencies": {
     "@types/node": "^18.7.1",

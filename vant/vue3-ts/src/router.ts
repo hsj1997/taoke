@@ -44,7 +44,8 @@ const routes = [
     path: '/search',
     component: () => import('@/view/search/index.vue'),
     meta: {
-      title: '搜索商品'
+      title: '搜索商品',
+      keepAlive:true
     }
   },
   {
